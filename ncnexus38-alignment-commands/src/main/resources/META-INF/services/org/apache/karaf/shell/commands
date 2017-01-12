@@ -1,0 +1,4 @@
+edu.unc.mapseq.commands.ncnexus.baseline.RegisterToIRODSAction
+edu.unc.mapseq.commands.ncnexus.baseline.RunWorkflowAction
+edu.unc.mapseq.commands.ncnexus.baseline.SaveCollectHsMetricsAttributesAction
+edu.unc.mapseq.commands.ncnexus.baseline.SaveMarkDuplicatesAttributesAction
