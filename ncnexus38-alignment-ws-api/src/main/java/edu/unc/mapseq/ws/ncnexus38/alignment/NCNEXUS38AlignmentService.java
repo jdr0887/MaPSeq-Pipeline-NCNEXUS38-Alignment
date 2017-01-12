@@ -17,7 +17,7 @@ import javax.xml.ws.BindingType;
 import org.renci.vcf.VCFResult;
 
 @BindingType(value = javax.xml.ws.soap.SOAPBinding.SOAP11HTTP_BINDING)
-@WebService(targetNamespace = "http://baseline.ncnexus.ws.mapseq.unc.edu", serviceName = "NCNEXUS38AlignmentService", portName = "NCNEXUS38AlignmentPort")
+@WebService(targetNamespace = "http://alignment.ncnexus38.ws.mapseq.unc.edu", serviceName = "NCNEXUS38AlignmentService", portName = "NCNEXUS38AlignmentPort")
 @SOAPBinding(style = Style.DOCUMENT, use = Use.LITERAL, parameterStyle = SOAPBinding.ParameterStyle.WRAPPED)
 @Path("/NCNEXUS38AlignmentService/")
 @Consumes(MediaType.APPLICATION_JSON)

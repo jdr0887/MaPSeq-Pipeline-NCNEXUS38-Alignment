@@ -25,7 +25,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import edu.unc.mapseq.config.MaPSeqConfigurationService;
 import edu.unc.mapseq.dao.MaPSeqDAOBeanService;
 
-@Command(scope = "ncnexus-baseline", name = "run-workflow", description = "Run NCNEXUS Baseline Workflow")
+@Command(scope = "ncnexus38-alignment", name = "run-workflow", description = "Run NCNEXUS Baseline Workflow")
 @Service
 public class RunWorkflowAction implements Action {
 

@@ -13,16 +13,16 @@
 
   <reference id="sampleDAO" interface="edu.unc.mapseq.dao.SampleDAO" />
 
-  <bean id="NCNEXUSBaseline" class="edu.unc.mapseq.ws.ncnexus.baseline.impl.NCNEXUSBaselineServiceImpl">
+  <bean id="NCNEXUS38Alignment" class="edu.unc.mapseq.ws.ncnexus38.alignment.impl.NCNEXUS38AlignmentServiceImpl">
     <property name="sampleDAO" ref="sampleDAO" />
   </bean>
 
-  <jaxrs:server id="NCNEXUSBaselineServiceRS" address="/NCNEXUSBaseline">
+  <jaxrs:server id="NCNEXUS38AlignmentServiceRS" address="/NCNEXUS38Alignment">
     <jaxrs:serviceBeans>
-      <ref component-id="NCNEXUSBaseline" />
+      <ref component-id="NCNEXUS38Alignment" />
     </jaxrs:serviceBeans>
   </jaxrs:server>
 
-  <jaxws:endpoint id="NCNEXUSBaselineServiceWS" implementor="#NCNEXUSBaseline" address="/NCNEXUSBaselineService" />
+  <jaxws:endpoint id="NCNEXUS38AlignmentServiceWS" implementor="#NCNEXUS38Alignment" address="/NCNEXUS38AlignmentService" />
 
 </blueprint>

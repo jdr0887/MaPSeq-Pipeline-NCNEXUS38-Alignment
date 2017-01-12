@@ -16,7 +16,7 @@ import edu.unc.mapseq.dao.MaPSeqDAOBeanService;
 import edu.unc.mapseq.dao.MaPSeqDAOException;
 import edu.unc.mapseq.dao.model.WorkflowRunAttempt;
 
-@Command(scope = "ncnexus-baseline", name = "register-to-irods", description = "Register a NCNEXUSBaseline sample output to iRODS")
+@Command(scope = "ncnexus38-alignment", name = "register-to-irods", description = "Register a NCNEXUSBaseline sample output to iRODS")
 @Service
 public class RegisterToIRODSAction implements Action {
 

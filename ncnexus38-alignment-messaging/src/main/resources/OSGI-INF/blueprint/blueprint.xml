@@ -4,19 +4,19 @@
 
   <reference id="connectionFactory" interface="javax.jms.ConnectionFactory" />
 
-  <reference id="NCNEXUSBaselineWorkflowBeanService" interface="edu.unc.mapseq.workflow.WorkflowBeanService"
-    component-name="NCNEXUSBaselineWorkflowBeanService" />
+  <reference id="NCNEXUS38AlignmentWorkflowBeanService" interface="edu.unc.mapseq.workflow.WorkflowBeanService"
+    component-name="NCNEXUS38AlignmentWorkflowBeanService" />
 
-  <bean id="NCNEXUSBaselineMessageListener" class="edu.unc.mapseq.messaging.ncnexus.baseline.NCNEXUSBaselineMessageListener">
-    <property name="workflowBeanService" ref="NCNEXUSBaselineWorkflowBeanService" />
-    <property name="workflowName" value="NCNEXUSBaseline" />
+  <bean id="NCNEXUS38AlignmentMessageListener" class="edu.unc.mapseq.messaging.ncnexus38.alignment.NCNEXUS38AlignmentMessageListener">
+    <property name="workflowBeanService" ref="NCNEXUS38AlignmentWorkflowBeanService" />
+    <property name="workflowName" value="NCNEXUS38Alignment" />
   </bean>
 
-  <bean id="NCNEXUSBaselineMessageService" class="edu.unc.mapseq.messaging.ncnexus.baseline.NCNEXUSBaselineMessageService"
+  <bean id="NCNEXUS38AlignmentMessageService" class="edu.unc.mapseq.messaging.ncnexus38.alignment.NCNEXUS38AlignmentMessageService"
     init-method="start" destroy-method="stop" activation="eager">
     <property name="connectionFactory" ref="connectionFactory" />
-    <property name="messageListener" ref="NCNEXUSBaselineMessageListener" />
-    <property name="destinationName" value="queue/ncnexus.baseline" />
+    <property name="messageListener" ref="NCNEXUS38AlignmentMessageListener" />
+    <property name="destinationName" value="queue/ncnexus38.alignment" />
   </bean>
 
 </blueprint>

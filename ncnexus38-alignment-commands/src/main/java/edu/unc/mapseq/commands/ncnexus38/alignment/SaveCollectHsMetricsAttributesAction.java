@@ -16,7 +16,7 @@ import edu.unc.mapseq.dao.MaPSeqDAOBeanService;
 import edu.unc.mapseq.dao.MaPSeqDAOException;
 import edu.unc.mapseq.dao.model.WorkflowRunAttempt;
 
-@Command(scope = "ncnexus-baseline", name = "save-collect-hs-metrics-attributes", description = "Save CollectHsMetrics Attributes")
+@Command(scope = "ncnexus38-alignment", name = "save-collect-hs-metrics-attributes", description = "Save CollectHsMetrics Attributes")
 @Service
 public class SaveCollectHsMetricsAttributesAction implements Action {
 

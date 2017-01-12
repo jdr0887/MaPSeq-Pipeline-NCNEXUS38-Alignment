@@ -16,7 +16,7 @@ import edu.unc.mapseq.dao.MaPSeqDAOBeanService;
 import edu.unc.mapseq.dao.MaPSeqDAOException;
 import edu.unc.mapseq.dao.model.WorkflowRun;
 
-@Command(scope = "ncnexus-baseline", name = "save-mark-duplicates-attributes", description = "Save MarkDuplicates Attributes")
+@Command(scope = "ncnexus38-alignment", name = "save-mark-duplicates-attributes", description = "Save MarkDuplicates Attributes")
 @Service
 public class SaveMarkDuplicatesAttributesAction implements Action {
 
