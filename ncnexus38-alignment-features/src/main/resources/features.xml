@@ -1,13 +1,13 @@
-<features name="mapseq-pipeline-ncnexus-baseline-${project.version}" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0">
+<features name="mapseq-pipeline-ncnexus38-alignment-${project.version}" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0">
 
-  <feature name="mapseq-pipeline-ncnexus-baseline" version="${project.version}" resolver="(obr)">
-    <bundle>mvn:edu.unc.mapseq.pipelines.ncnexus-baseline/ncnexus-baseline-commons/${project.version}</bundle>
-    <bundle>mvn:edu.unc.mapseq.pipelines.ncnexus-baseline/ncnexus-baseline-workflow/${project.version}</bundle>
-    <bundle>mvn:edu.unc.mapseq.pipelines.ncnexus-baseline/ncnexus-baseline-commands/${project.version}</bundle>
-    <bundle>mvn:edu.unc.mapseq.pipelines.ncnexus-baseline/ncnexus-baseline-ws-api/${project.version}</bundle>
-    <bundle>mvn:edu.unc.mapseq.pipelines.ncnexus-baseline/ncnexus-baseline-ws-impl/${project.version}</bundle>    
-    <bundle start-level="100">mvn:edu.unc.mapseq.pipelines.ncnexus-baseline/ncnexus-baseline-executor/${project.version}</bundle>
-    <bundle start-level="100">mvn:edu.unc.mapseq.pipelines.ncnexus-baseline/ncnexus-baseline-messaging/${project.version}</bundle>
+  <feature name="mapseq-pipeline-ncnexus38-alignment" version="${project.version}" resolver="(obr)">
+    <bundle>mvn:edu.unc.mapseq.pipelines.ncnexus38-alignment/ncnexus38-alignment-commons/${project.version}</bundle>
+    <bundle>mvn:edu.unc.mapseq.pipelines.ncnexus38-alignment/ncnexus38-alignment-workflow/${project.version}</bundle>
+    <bundle>mvn:edu.unc.mapseq.pipelines.ncnexus38-alignment/ncnexus38-alignment-commands/${project.version}</bundle>
+    <bundle>mvn:edu.unc.mapseq.pipelines.ncnexus38-alignment/ncnexus38-alignment-ws-api/${project.version}</bundle>
+    <bundle>mvn:edu.unc.mapseq.pipelines.ncnexus38-alignment/ncnexus38-alignment-ws-impl/${project.version}</bundle>    
+    <bundle start-level="100">mvn:edu.unc.mapseq.pipelines.ncnexus38-alignment/ncnexus38-alignment-executor/${project.version}</bundle>
+    <bundle start-level="100">mvn:edu.unc.mapseq.pipelines.ncnexus38-alignment/ncnexus38-alignment-messaging/${project.version}</bundle>
   </feature>
 
 </features>
