@@ -2,7 +2,6 @@ package edu.unc.mapseq.workflow.ncnexus38.alignment;
 
 import java.io.File;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -65,13 +64,8 @@ public class NCNEXUS38AlignmentWorkflow extends AbstractSequencingWorkflow {
         String siteName = getWorkflowBeanService().getAttributes().get("siteName");
         String referenceSequence = getWorkflowBeanService().getAttributes().get("referenceSequence");
         String readGroupPlatform = getWorkflowBeanService().getAttributes().get("readGroupPlatform");
-        String par1Coordinate = getWorkflowBeanService().getAttributes().get("par1Coordinate");
-        String par2Coordinate = getWorkflowBeanService().getAttributes().get("par2Coordinate");
         String baitIntervalList = getWorkflowBeanService().getAttributes().get("baitIntervalList");
         String targetIntervalList = getWorkflowBeanService().getAttributes().get("targetIntervalList");
-        String numberOfFreeBayesSubsets = getWorkflowBeanService().getAttributes().get("numberOfFreeBayesSubsets");
-        String gender = getWorkflowBeanService().getAttributes().get("gender");
-        String sselProbe = getWorkflowBeanService().getAttributes().get("sselProbe");
 
         WorkflowRunAttempt attempt = getWorkflowRunAttempt();
         WorkflowRun workflowRun = attempt.getWorkflowRun();
@@ -107,21 +101,6 @@ public class NCNEXUS38AlignmentWorkflow extends AbstractSequencingWorkflow {
             Set<Attribute> workflowRunAttributeSet = workflowRun.getAttributes();
 
             if (CollectionUtils.isNotEmpty(workflowRunAttributeSet)) {
-
-                if (CollectionUtils.isNotEmpty(workflowRunAttributeSet)) {
-                    Optional<Attribute> foundAttribute = workflowRunAttributeSet.stream().filter(a -> "sselProbe".equals(a.getName())).findFirst();
-                    if (foundAttribute.isPresent()) {
-                        sselProbe = foundAttribute.get().getName();
-                    }
-                    foundAttribute = workflowRunAttributeSet.stream().filter(a -> "gender".equals(a.getName())).findFirst();
-                    if (foundAttribute.isPresent()) {
-                        gender = foundAttribute.get().getName();
-                    }
-                    foundAttribute = workflowRunAttributeSet.stream().filter(a -> "freeBayesJobCount".equals(a.getName())).findFirst();
-                    if (foundAttribute.isPresent()) {
-                        numberOfFreeBayesSubsets = foundAttribute.get().getName();
-                    }
-                }
 
                 for (Attribute attribute : workflowRunAttributeSet) {
                     if ("sselProbe".equals(attribute.getName())) {
@@ -168,7 +147,8 @@ public class NCNEXUS38AlignmentWorkflow extends AbstractSequencingWorkflow {
                         .siteName(siteName);
                 File r1FastqFile = readPairList.get(0);
                 File fastqcR1Output = new File(workflowDirectory, String.format("%s.r1.fastqc.zip", rootFileName));
-                builder.addArgument(FastQCCLI.INPUT, r1FastqFile.getAbsolutePath()).addArgument(FastQCCLI.OUTPUT, fastqcR1Output.getAbsolutePath())
+                builder.addArgument(FastQCCLI.INPUT, r1FastqFile.getAbsolutePath())
+                        .addArgument(FastQCCLI.OUTPUT, fastqcR1Output.getAbsolutePath())
                         .addArgument(FastQCCLI.IGNORE, IgnoreLevelType.ERROR.toString());
 
                 CondorJob fastQCR1Job = builder.build();
@@ -176,22 +156,25 @@ public class NCNEXUS38AlignmentWorkflow extends AbstractSequencingWorkflow {
                 graph.addVertex(fastQCR1Job);
 
                 // new job
-                builder = SequencingWorkflowJobFactory.createJob(++count, FastQCCLI.class, attempt.getId(), sample.getId()).siteName(siteName);
+                builder = SequencingWorkflowJobFactory.createJob(++count, FastQCCLI.class, attempt.getId(), sample.getId())
+                        .siteName(siteName);
                 File r2FastqFile = readPairList.get(1);
                 File fastqcR2Output = new File(workflowDirectory, String.format("%s.r2.fastqc.zip", rootFileName));
-                builder.addArgument(FastQCCLI.INPUT, r2FastqFile.getAbsolutePath()).addArgument(FastQCCLI.OUTPUT, fastqcR2Output.getAbsolutePath())
+                builder.addArgument(FastQCCLI.INPUT, r2FastqFile.getAbsolutePath())
+                        .addArgument(FastQCCLI.OUTPUT, fastqcR2Output.getAbsolutePath())
                         .addArgument(FastQCCLI.IGNORE, IgnoreLevelType.ERROR.toString());
                 CondorJob fastQCR2Job = builder.build();
                 logger.info(fastQCR2Job.toString());
                 graph.addVertex(fastQCR2Job);
 
                 // new job
-                builder = SequencingWorkflowJobFactory.createJob(++count, BWAMEMCLI.class, attempt.getId(), sample.getId()).siteName(siteName)
-                        .numberOfProcessors(4);
+                builder = SequencingWorkflowJobFactory.createJob(++count, BWAMEMCLI.class, attempt.getId(), sample.getId())
+                        .siteName(siteName).numberOfProcessors(4);
                 File bwaMemOutFile = new File(workflowDirectory, String.format("%s.mem.sam", rootFileName));
-                builder.addArgument(BWAMEMCLI.THREADS, "4").addArgument(BWAMEMCLI.VERBOSITY, "1").addArgument(BWAMEMCLI.FASTADB, referenceSequence)
-                        .addArgument(BWAMEMCLI.FASTQ1, r1FastqFile.getAbsolutePath()).addArgument(BWAMEMCLI.FASTQ2, r2FastqFile.getAbsolutePath())
-                        .addArgument(BWAMEMCLI.MARKSHORTERSPLITHITS).addArgument(BWAMEMCLI.OUTFILE, bwaMemOutFile.getAbsolutePath());
+                builder.addArgument(BWAMEMCLI.THREADS, "4").addArgument(BWAMEMCLI.VERBOSITY, "1")
+                        .addArgument(BWAMEMCLI.FASTADB, referenceSequence).addArgument(BWAMEMCLI.FASTQ1, r1FastqFile.getAbsolutePath())
+                        .addArgument(BWAMEMCLI.FASTQ2, r2FastqFile.getAbsolutePath()).addArgument(BWAMEMCLI.MARKSHORTERSPLITHITS)
+                        .addArgument(BWAMEMCLI.OUTFILE, bwaMemOutFile.getAbsolutePath());
                 CondorJob bwaMemJob = builder.build();
                 logger.info(bwaMemJob.toString());
                 graph.addVertex(bwaMemJob);
@@ -199,8 +182,8 @@ public class NCNEXUS38AlignmentWorkflow extends AbstractSequencingWorkflow {
                 graph.addEdge(fastQCR2Job, bwaMemJob);
 
                 // new job
-                builder = SequencingWorkflowJobFactory.createJob(++count, PicardAddOrReplaceReadGroupsCLI.class, attempt.getId(), sample.getId())
-                        .siteName(siteName);
+                builder = SequencingWorkflowJobFactory
+                        .createJob(++count, PicardAddOrReplaceReadGroupsCLI.class, attempt.getId(), sample.getId()).siteName(siteName);
                 File fixRGOutput = new File(workflowDirectory, bwaMemOutFile.getName().replace(".sam", ".rg.bam"));
                 String readGroupId = String.format("%s-%s.L%03d", flowcell.getName(), sample.getBarcode(), sample.getLaneIndex());
                 builder.addArgument(PicardAddOrReplaceReadGroupsCLI.INPUT, bwaMemOutFile.getAbsolutePath())
@@ -218,7 +201,8 @@ public class NCNEXUS38AlignmentWorkflow extends AbstractSequencingWorkflow {
                 graph.addEdge(bwaMemJob, picardAddOrReplaceReadGroupsJob);
 
                 // new job
-                builder = SequencingWorkflowJobFactory.createJob(++count, SAMToolsIndexCLI.class, attempt.getId(), sample.getId()).siteName(siteName);
+                builder = SequencingWorkflowJobFactory.createJob(++count, SAMToolsIndexCLI.class, attempt.getId(), sample.getId())
+                        .siteName(siteName);
                 File picardAddOrReplaceReadGroupsIndexOut = new File(workflowDirectory, fixRGOutput.getName().replace(".bam", ".bai"));
                 builder.addArgument(SAMToolsIndexCLI.INPUT, fixRGOutput.getAbsolutePath()).addArgument(SAMToolsIndexCLI.OUTPUT,
                         picardAddOrReplaceReadGroupsIndexOut.getAbsolutePath());
@@ -241,10 +225,11 @@ public class NCNEXUS38AlignmentWorkflow extends AbstractSequencingWorkflow {
                 graph.addEdge(samtoolsIndexJob, picardMarkDuplicatesJob);
 
                 // new job
-                builder = SequencingWorkflowJobFactory.createJob(++count, SAMToolsIndexCLI.class, attempt.getId(), sample.getId()).siteName(siteName);
+                builder = SequencingWorkflowJobFactory.createJob(++count, SAMToolsIndexCLI.class, attempt.getId(), sample.getId())
+                        .siteName(siteName);
                 File picardMarkDuplicatesIndex = new File(workflowDirectory, picardMarkDuplicatesOutput.getName().replace(".bam", ".bai"));
-                builder.addArgument(SAMToolsIndexCLI.INPUT, picardMarkDuplicatesOutput.getAbsolutePath()).addArgument(SAMToolsIndexCLI.OUTPUT,
-                        picardMarkDuplicatesIndex.getAbsolutePath());
+                builder.addArgument(SAMToolsIndexCLI.INPUT, picardMarkDuplicatesOutput.getAbsolutePath())
+                        .addArgument(SAMToolsIndexCLI.OUTPUT, picardMarkDuplicatesIndex.getAbsolutePath());
                 samtoolsIndexJob = builder.build();
                 logger.info(samtoolsIndexJob.toString());
                 graph.addVertex(samtoolsIndexJob);
@@ -253,7 +238,8 @@ public class NCNEXUS38AlignmentWorkflow extends AbstractSequencingWorkflow {
                 // new job
                 builder = SequencingWorkflowJobFactory.createJob(++count, PicardCollectHsMetricsCLI.class, attempt.getId(), sample.getId())
                         .siteName(siteName);
-                File picardCollectHsMetricsFile = new File(workflowDirectory, picardMarkDuplicatesOutput.getName().replace(".bam", ".hs.metrics"));
+                File picardCollectHsMetricsFile = new File(workflowDirectory,
+                        picardMarkDuplicatesOutput.getName().replace(".bam", ".hs.metrics"));
                 builder.addArgument(PicardCollectHsMetricsCLI.INPUT, picardMarkDuplicatesOutput.getAbsolutePath())
                         .addArgument(PicardCollectHsMetricsCLI.OUTPUT, picardCollectHsMetricsFile.getAbsolutePath())
                         .addArgument(PicardCollectHsMetricsCLI.REFERENCESEQUENCE, referenceSequence)
@@ -265,8 +251,10 @@ public class NCNEXUS38AlignmentWorkflow extends AbstractSequencingWorkflow {
                 graph.addEdge(samtoolsIndexJob, picardCollectHsMetricsJob);
 
                 // new job
-                builder = SequencingWorkflowJobFactory.createJob(++count, RemoveCLI.class, attempt.getId(), sample.getId()).siteName(siteName);
-                builder.addArgument(RemoveCLI.FILE, bwaMemOutFile.getAbsolutePath()).addArgument(RemoveCLI.FILE, fixRGOutput.getAbsolutePath())
+                builder = SequencingWorkflowJobFactory.createJob(++count, RemoveCLI.class, attempt.getId(), sample.getId())
+                        .siteName(siteName);
+                builder.addArgument(RemoveCLI.FILE, bwaMemOutFile.getAbsolutePath())
+                        .addArgument(RemoveCLI.FILE, fixRGOutput.getAbsolutePath())
                         .addArgument(RemoveCLI.FILE, picardAddOrReplaceReadGroupsIndexOut.getAbsolutePath());
                 CondorJob removeJob = builder.build();
                 logger.info(removeJob.toString());
@@ -303,12 +291,12 @@ public class NCNEXUS38AlignmentWorkflow extends AbstractSequencingWorkflow {
                 registerToIRODSRunnable.setSampleId(sample.getId());
                 executorService.submit(registerToIRODSRunnable);
 
-                SaveCollectHsMetricsAttributesRunnable saveCollectHsMetricsAttributesRunnable = new SaveCollectHsMetricsAttributesRunnable(daoBean,
-                        getWorkflowRunAttempt());
+                SaveCollectHsMetricsAttributesRunnable saveCollectHsMetricsAttributesRunnable = new SaveCollectHsMetricsAttributesRunnable(
+                        daoBean, getWorkflowRunAttempt());
                 executorService.submit(saveCollectHsMetricsAttributesRunnable);
 
-                SaveMarkDuplicatesAttributesRunnable saveMarkDuplicatesAttributesRunnable = new SaveMarkDuplicatesAttributesRunnable(daoBean,
-                        getWorkflowRunAttempt().getWorkflowRun());
+                SaveMarkDuplicatesAttributesRunnable saveMarkDuplicatesAttributesRunnable = new SaveMarkDuplicatesAttributesRunnable(
+                        daoBean, getWorkflowRunAttempt().getWorkflowRun());
                 saveMarkDuplicatesAttributesRunnable.setSampleId(sample.getId());
                 executorService.submit(saveMarkDuplicatesAttributesRunnable);
 
