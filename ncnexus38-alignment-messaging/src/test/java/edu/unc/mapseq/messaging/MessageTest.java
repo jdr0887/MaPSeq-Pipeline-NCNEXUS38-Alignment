@@ -34,13 +34,13 @@ public class MessageTest {
 
     @Test
     public void testQueue() {
-        ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(String.format("nio://%s:61616", "152.19.198.146"));
+        ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(String.format("nio://%s:61616", "152.54.3.109"));
         Connection connection = null;
         Session session = null;
         try {
             connection = connectionFactory.createConnection();
             session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-            Destination destination = session.createQueue("queue/ncnexus.baseline");
+            Destination destination = session.createQueue("queue/ncnexus38.alignment");
             MessageProducer producer = session.createProducer(destination);
             producer.setDeliveryMode(DeliveryMode.PERSISTENT);
 
@@ -54,13 +54,13 @@ public class MessageTest {
 
                 generator.writeStartObject();
                 generator.writeStringField("entityType", "Sample");
-                generator.writeStringField("id", "2516172");
+                generator.writeStringField("id", "1774501");
 
                 generator.writeArrayFieldStart("attributes");
 
                 generator.writeStartObject();
                 generator.writeStringField("name", "subjectName");
-                generator.writeStringField("value", "NCG_00064");
+                generator.writeStringField("value", "NCG_00020");
                 generator.writeEndObject();
 
                 generator.writeEndArray();
@@ -68,13 +68,13 @@ public class MessageTest {
 
                 generator.writeStartObject();
                 generator.writeStringField("entityType", "WorkflowRun");
-                generator.writeStringField("name", "D13KNACXX_NCG_00064_L2_ATCACG_Baseline_Run_1");
+                generator.writeStringField("name", "140121_UNC17-D00216_0131_AH8E5TADXX-L001_ATCACG-alignment-jdr");
 
                 generator.writeArrayFieldStart("attributes");
 
                 generator.writeStartObject();
                 generator.writeStringField("name", "sselProbe");
-                generator.writeStringField("value", "5");
+                generator.writeStringField("value", "6");
                 generator.writeEndObject();
 
                 generator.writeEndArray();
@@ -122,8 +122,8 @@ public class MessageTest {
             String line;
 
             while ((line = br.readLine()) != null) {
-                producer.send(session.createTextMessage(
-                        String.format(format, line.trim(), "jdr-test-ncnexus-baseline", DateFormatUtils.ISO_TIME_NO_T_FORMAT.format(new Date()))));
+                producer.send(session.createTextMessage(String.format(format, line.trim(), "jdr-test-ncnexus-baseline",
+                        DateFormatUtils.ISO_TIME_NO_T_FORMAT.format(new Date()))));
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
