@@ -106,16 +106,16 @@ public class NCNEXUS38AlignmentWorkflow extends AbstractSequencingWorkflow {
                     if ("sselProbe".equals(attribute.getName())) {
                         switch (attribute.getValue()) {
                             case "5":
-                                baitIntervalList = "$NCNEXUS_RESOURCES_DIRECTORY/intervals/agilent_v5_capture_region_pm_100.shortid.interval_list";
-                                targetIntervalList = "$NCNEXUS_RESOURCES_DIRECTORY/intervals/agilent_v5_capture_region_pm_100.shortid.interval_list";
+                                baitIntervalList = "$NCNEXUS_RESOURCES_DIRECTORY/intervals/agilent_v5_capture_region_pm_100.shortid.38.interval_list";
+                                targetIntervalList = "$NCNEXUS_RESOURCES_DIRECTORY/intervals/agilent_v5_capture_region_pm_100.shortid.38.interval_list";
                                 break;
                             case "5 + EGL":
-                                baitIntervalList = "$NCNEXUS_RESOURCES_DIRECTORY/intervals/agilent_v5_egl_capture_region_pm_100.shortid.interval_list";
-                                targetIntervalList = "$NCNEXUS_RESOURCES_DIRECTORY/intervals/agilent_v5_egl_capture_region_pm_100.shortid.interval_list";
+                                baitIntervalList = "$NCNEXUS_RESOURCES_DIRECTORY/intervals/agilent_v5_egl_capture_region_pm_100.shortid.38.interval_list";
+                                targetIntervalList = "$NCNEXUS_RESOURCES_DIRECTORY/intervals/agilent_v5_egl_capture_region_pm_100.shortid.38.interval_list";
                                 break;
                             case "6":
-                                baitIntervalList = "$NCNEXUS_RESOURCES_DIRECTORY/intervals/agilent_v6_capture_region_pm_100.shortid.interval_list";
-                                targetIntervalList = "$NCNEXUS_RESOURCES_DIRECTORY/intervals/agilent_v6_capture_region_pm_100.shortid.interval_list";
+                                baitIntervalList = "$NCNEXUS_RESOURCES_DIRECTORY/intervals/agilent_v6_capture_region_pm_100.shortid.38.interval_list";
+                                targetIntervalList = "$NCNEXUS_RESOURCES_DIRECTORY/intervals/agilent_v6_capture_region_pm_100.shortid.38.interval_list";
                                 break;
                         }
                         break;
