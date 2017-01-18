@@ -61,8 +61,6 @@
     <module>ncnexus38-alignment-workflow</module>
     <module>ncnexus38-alignment-commons</module>
     <module>ncnexus38-alignment-executor</module>
-    <module>ncnexus38-alignment-ws-api</module>
-    <module>ncnexus38-alignment-ws-impl</module>
     <module>ncnexus38-alignment-commands</module>
     <module>ncnexus38-alignment-features</module>
     <module>ncnexus38-alignment-messaging</module>

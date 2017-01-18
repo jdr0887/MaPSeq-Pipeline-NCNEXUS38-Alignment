@@ -4,8 +4,6 @@
     <bundle>mvn:edu.unc.mapseq.pipelines.ncnexus38-alignment/ncnexus38-alignment-commons/${project.version}</bundle>
     <bundle>mvn:edu.unc.mapseq.pipelines.ncnexus38-alignment/ncnexus38-alignment-workflow/${project.version}</bundle>
     <bundle>mvn:edu.unc.mapseq.pipelines.ncnexus38-alignment/ncnexus38-alignment-commands/${project.version}</bundle>
-    <bundle>mvn:edu.unc.mapseq.pipelines.ncnexus38-alignment/ncnexus38-alignment-ws-api/${project.version}</bundle>
-    <bundle>mvn:edu.unc.mapseq.pipelines.ncnexus38-alignment/ncnexus38-alignment-ws-impl/${project.version}</bundle>    
     <bundle start-level="100">mvn:edu.unc.mapseq.pipelines.ncnexus38-alignment/ncnexus38-alignment-executor/${project.version}</bundle>
     <bundle start-level="100">mvn:edu.unc.mapseq.pipelines.ncnexus38-alignment/ncnexus38-alignment-messaging/${project.version}</bundle>
   </feature>
