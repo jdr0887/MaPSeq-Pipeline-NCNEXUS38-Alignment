@@ -54,13 +54,14 @@ public class MessageTest {
 
                 generator.writeStartObject();
                 generator.writeStringField("entityType", "Sample");
-                generator.writeStringField("id", "1774501");
-
+                //generator.writeStringField("id", "1774501");
+                generator.writeStringField("id", "2622760");
+                
                 generator.writeArrayFieldStart("attributes");
 
                 generator.writeStartObject();
                 generator.writeStringField("name", "subjectName");
-                generator.writeStringField("value", "NCG_00020");
+                generator.writeStringField("value", "HRC061-1");
                 generator.writeEndObject();
 
                 generator.writeEndArray();
@@ -68,7 +69,7 @@ public class MessageTest {
 
                 generator.writeStartObject();
                 generator.writeStringField("entityType", "WorkflowRun");
-                generator.writeStringField("name", "140121_UNC17-D00216_0131_AH8E5TADXX-L001_ATCACG-alignment-jdr");
+                generator.writeStringField("name", "NCNEXUS38-2622760-alignment-jdr");
 
                 generator.writeArrayFieldStart("attributes");
 
