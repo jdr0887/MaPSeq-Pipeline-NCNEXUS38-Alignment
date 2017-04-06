@@ -1,4 +1,0 @@
-edu.unc.mapseq.commands.ncnexus38.alignment.RegisterToIRODSAction
-edu.unc.mapseq.commands.ncnexus38.alignment.RunWorkflowAction
-edu.unc.mapseq.commands.ncnexus38.alignment.SaveCollectHsMetricsAttributesAction
-edu.unc.mapseq.commands.ncnexus38.alignment.SaveMarkDuplicatesAttributesAction
