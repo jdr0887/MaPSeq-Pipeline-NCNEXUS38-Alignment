@@ -1,0 +1,5 @@
+edu.unc.mapseq.commands.ncnexus38.alignment
+edu.unc.mapseq.commons.ncnexus38.alignment
+edu.unc.mapseq.executor.ncnexus38.alignment
+edu.unc.mapseq.messaging.ncnexus38.alignment
+edu.unc.mapseq.workflow.ncnexus38.alignment

@@ -1,0 +1,19 @@
+digraph G {
+  FastQCCLI_1 [ label="FastQCCLI_1" ];
+  FastQCCLI_2 [ label="FastQCCLI_2" ];
+  BWAMEMCLI_3 [ label="BWAMEMCLI_3" ];
+  PicardAddOrReplaceReadGroupsCLI_4 [ label="PicardAddOrReplaceReadGroupsCLI_4" ];
+  SAMToolsIndexCLI_5 [ label="SAMToolsIndexCLI_5" ];
+  PicardMarkDuplicatesCLI_6 [ label="PicardMarkDuplicatesCLI_6" ];
+  SAMToolsIndexCLI_7 [ label="SAMToolsIndexCLI_7" ];
+  PicardCollectHsMetricsCLI_8 [ label="PicardCollectHsMetricsCLI_8" ];
+  RemoveCLI_9 [ label="RemoveCLI_9" ];
+  FastQCCLI_1 -> BWAMEMCLI_3;
+  FastQCCLI_2 -> BWAMEMCLI_3;
+  BWAMEMCLI_3 -> PicardAddOrReplaceReadGroupsCLI_4;
+  PicardAddOrReplaceReadGroupsCLI_4 -> SAMToolsIndexCLI_5;
+  SAMToolsIndexCLI_5 -> PicardMarkDuplicatesCLI_6;
+  PicardMarkDuplicatesCLI_6 -> SAMToolsIndexCLI_7;
+  SAMToolsIndexCLI_7 -> PicardCollectHsMetricsCLI_8;
+  PicardCollectHsMetricsCLI_8 -> RemoveCLI_9;
+}
