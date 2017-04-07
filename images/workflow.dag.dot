@@ -22,11 +22,11 @@ digraph G {
 --input <workflowRunName>.mem.sam
 --output <workflowRunName>.mem.rg.bam
 --sortOrder coordinate
---readGroupId readgroupId
---readGroupLibrary sampleName
---readGroupPlatform readGroupPlatform
---readGroupPlatformUnit readGroupId
---readGroupSampleName sampleName
+--readGroupId <readgroupId>
+--readGroupLibrary <sampleName>
+--readGroupPlatform <readGroupPlatform>
+--readGroupPlatformUnit <readGroupId>
+--readGroupSampleName <sampleName>
 --readGroupCenterName UNC
 " ];
   SAMToolsIndexCLI_5 [ label="SAMToolsIndexCLI_5
