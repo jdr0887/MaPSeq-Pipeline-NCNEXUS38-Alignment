@@ -13,7 +13,7 @@ import edu.unc.mapseq.dao.SampleDAO;
 import edu.unc.mapseq.dao.model.FileData;
 import edu.unc.mapseq.dao.model.MimeType;
 import edu.unc.mapseq.dao.model.Sample;
-import edu.unc.mapseq.ws.ncnexus38.mergevc.NCNEXUS38AlignmentService;
+import edu.unc.mapseq.ws.ncnexus38.alignment.NCNEXUS38AlignmentService;
 
 public class NCNEXUS38AlignmentServiceImpl implements NCNEXUS38AlignmentService {
 

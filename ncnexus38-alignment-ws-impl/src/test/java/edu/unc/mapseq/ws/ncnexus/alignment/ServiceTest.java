@@ -6,7 +6,7 @@ import javax.xml.ws.soap.SOAPBinding;
 
 import org.junit.Test;
 
-import edu.unc.mapseq.ws.ncnexus38.mergevc.NCNEXUS38AlignmentService;
+import edu.unc.mapseq.ws.ncnexus38.alignment.NCNEXUS38AlignmentService;
 
 public class ServiceTest {
 
