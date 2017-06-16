@@ -45,6 +45,11 @@
       </dependency>
       <dependency>
 	<groupId>edu.unc.mapseq.pipelines.ncnexus38-alignment</groupId>
+	<artifactId>ncnexus38-alignment-ws-api</artifactId>
+	<version>0.6.14-SNAPSHOT</version>	
+      </dependency>      
+      <dependency>
+	<groupId>edu.unc.mapseq.pipelines.ncnexus38-alignment</groupId>
 	<artifactId>ncnexus38-alignment-commons</artifactId>
 	<version>0.6.14-SNAPSHOT</version>
       </dependency>
@@ -62,5 +67,7 @@
     <module>ncnexus38-alignment-commands</module>
     <module>ncnexus38-alignment-features</module>
     <module>ncnexus38-alignment-messaging</module>
+    <module>ncnexus38-alignment-ws-api</module>
+    <module>ncnexus38-alignment-ws-impl</module>
   </modules>
 </project>
