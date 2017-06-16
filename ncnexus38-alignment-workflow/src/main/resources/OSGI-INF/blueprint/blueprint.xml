@@ -33,6 +33,7 @@
         <entry key="baitIntervalList" value="${baitIntervalList}" />
         <entry key="targetIntervalList" value="${targetIntervalList}" />
         <entry key="readGroupPlatform" value="${readGroupPlatform}" />
+        <entry key="icSNPBed" value="${icSNPBed}" />
       </map>
     </property>
     <cm:managed-properties persistent-id="edu.unc.mapseq.workflow.ncnexus38.alignment"
