@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 
 import edu.unc.mapseq.commons.ncnexus38.alignment.RegisterToIRODSRunnable;
 import edu.unc.mapseq.commons.ncnexus38.alignment.SaveCollectHsMetricsAttributesRunnable;
+import edu.unc.mapseq.commons.ncnexus38.alignment.SaveFlagstatAttributesRunnable;
 import edu.unc.mapseq.commons.ncnexus38.alignment.SaveMarkDuplicatesAttributesRunnable;
 import edu.unc.mapseq.dao.MaPSeqDAOBeanService;
 import edu.unc.mapseq.dao.model.Attribute;
@@ -31,12 +32,12 @@ import edu.unc.mapseq.module.core.RemoveCLI;
 import edu.unc.mapseq.module.sequencing.bwa.BWAMEMCLI;
 import edu.unc.mapseq.module.sequencing.fastqc.FastQCCLI;
 import edu.unc.mapseq.module.sequencing.fastqc.IgnoreLevelType;
-import edu.unc.mapseq.module.sequencing.filter.FilterVariantCLI;
 import edu.unc.mapseq.module.sequencing.freebayes.FreeBayesCLI;
 import edu.unc.mapseq.module.sequencing.picard.PicardAddOrReplaceReadGroupsCLI;
 import edu.unc.mapseq.module.sequencing.picard.PicardSortOrderType;
 import edu.unc.mapseq.module.sequencing.picard2.PicardCollectHsMetricsCLI;
 import edu.unc.mapseq.module.sequencing.picard2.PicardMarkDuplicatesCLI;
+import edu.unc.mapseq.module.sequencing.samtools.SAMToolsFlagstatCLI;
 import edu.unc.mapseq.module.sequencing.samtools.SAMToolsIndexCLI;
 import edu.unc.mapseq.workflow.WorkflowException;
 import edu.unc.mapseq.workflow.sequencing.AbstractSequencingWorkflow;
@@ -238,6 +239,18 @@ public class NCNEXUS38AlignmentWorkflow extends AbstractSequencingWorkflow {
                 graph.addEdge(picardMarkDuplicatesJob, samtoolsIndexJob);
 
                 // new job
+                builder = SequencingWorkflowJobFactory.createJob(++count, SAMToolsFlagstatCLI.class, attempt.getId(), sample.getId())
+                        .siteName(siteName);
+                File samtoolsFlagstatOut = new File(workflowDirectory,
+                        picardMarkDuplicatesOutput.getName().replace(".bam", ".samtools.flagstat"));
+                builder.addArgument(SAMToolsFlagstatCLI.INPUT, picardMarkDuplicatesOutput.getAbsolutePath())
+                        .addArgument(SAMToolsFlagstatCLI.OUTPUT, samtoolsFlagstatOut.getAbsolutePath());
+                CondorJob samtoolsFlagstatJob = builder.build();
+                logger.info(samtoolsFlagstatJob.toString());
+                graph.addVertex(samtoolsFlagstatJob);
+                graph.addEdge(samtoolsIndexJob, samtoolsFlagstatJob);
+
+                // new job
                 builder = SequencingWorkflowJobFactory.createJob(++count, FreeBayesCLI.class, attempt.getId(), sample.getId())
                         .siteName(siteName);
                 File freeBayesOutput = new File(workflowDirectory, picardMarkDuplicatesOutput.getName().replace(".bam", ".ic.vcf"));
@@ -306,6 +319,10 @@ public class NCNEXUS38AlignmentWorkflow extends AbstractSequencingWorkflow {
                 registerToIRODSRunnable.setSampleId(sample.getId());
                 executorService.submit(registerToIRODSRunnable);
 
+                SaveFlagstatAttributesRunnable saveFlagstatAttributeRunnable = new SaveFlagstatAttributesRunnable(
+                        getWorkflowBeanService().getMaPSeqDAOBeanService(), getWorkflowRunAttempt());
+                executorService.submit(saveFlagstatAttributeRunnable);
+
                 SaveCollectHsMetricsAttributesRunnable saveCollectHsMetricsAttributesRunnable = new SaveCollectHsMetricsAttributesRunnable(
                         daoBean, getWorkflowRunAttempt());
                 executorService.submit(saveCollectHsMetricsAttributesRunnable);
@@ -318,7 +335,9 @@ public class NCNEXUS38AlignmentWorkflow extends AbstractSequencingWorkflow {
             }
 
             executorService.shutdown();
-            executorService.awaitTermination(1L, TimeUnit.HOURS);
+            if (!executorService.awaitTermination(1L, TimeUnit.HOURS)) {
+                executorService.shutdownNow();
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
